@@ -1,0 +1,474 @@
+---
+title: "Portfólio & Guia Interativo de Simulações"
+author: "Letícia Camila Silva de Souza"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: show
+    code-tools: true
+jupyter: python3
+---
+
+# Introdução
+Descrever um pouco sobre a MOBFOG.
+
+# Conteúdos
+
+## O vôo do foguete
+
+A explicação do disparo de um foguete no ar, considerando o momento após a fase de impulsão inicial, no qual o foguete se move livremente pelo ar como um projétil na ausência de atrito, apoia-se nos conceitos da mecânica vetorial e nas leis do movimento desenvolvidas por Isaac Newton.
+
+Para descrever esse movimento em duas dimensões em um plano cartesiano $xOy$, a posição do foguete em qualquer instante $t$ é representada pelo vetor posição 
+$$ \mathbf{r} = x\mathbf{i} + y\mathbf{j}, $$ 
+
+no qual $x$ e $y$ são as coordenadas de posição e os vetores $\mathbf{i}$ e $\mathbf{j}$ representam os vetores unitários apontando nas direções horizontal e vertical, respectivamente.
+
+Da mesma forma, a variação da posição ao longo do tempo define o vetor velocidade 
+
+$$ \mathbf{v} = v_x\mathbf{i} + v_y\mathbf{j}, $$
+
+enquanto a taxa de variação da velocidade define o vetor aceleração
+
+$$ \mathbf{a} = a_x\mathbf{i} + a_y\mathbf{j}. $$
+
+Um princípio fundamental da física vetorial estabelece que o movimento em duas dimensões pode ser tratado como a superposição de dois movimentos componentes independentes e perpendiculares entre si: um movimento retilíneo no eixo horizontal $x$ e outro no eixo vertical $y$.
+
+Pelo fato de não haver nenhuma força atuando na direção horizontal, a aceleração no eixo $x$ é nula ($a_x = 0$), o que significa que o componente horizontal da velocidade permanece constante e igual ao seu valor inicial durante todo o trajeto, ou seja, 
+
+$$ v_x = v_0 \cos\theta_0. $$
+
+A posição horizontal $x$ percorrida pelo foguete em um determinado tempo $t$ é descrita de forma simples pela equação 
+
+$$ x = v_x t = (v_0 \cos\theta_0)t. $$
+
+Por outro lado, na direção vertical $y$, a gravidade constante produz uma aceleração direcionada para baixo com módulo $g$, fazendo com que $a_y = -g$. Dessa forma, a velocidade vertical diminui gradualmente durante a subida de acordo com a função 
+
+$$ v_y = v_0 \sin\theta_0 - gt, $$
+
+enquanto a posição vertical $y$ em qualquer instante é dada pela fórmula 
+
+$$ y = (v_0 \sin\theta_0)t - \frac{1}{2}gt^2. $$
+
+A composição dessas duas equações gera uma trajetória curvilínea cuja forma geométrica é uma parábola.
+
+Para deduzir a fórmula matemática do alcance horizontal $R$, que é o deslocamento horizontal máximo do foguete desde a origem até o ponto onde ele retorna ao mesmo nível do solo ($y = 0$), precisamos primeiro encontrar o tempo total $t_2$ que o foguete permanece voando.
+
+Para isso, igualamos a posição vertical a zero na equação do movimento vertical, obtendo: 
+
+$$ 0 = (v_0 \sin\theta_0)t_2 - \frac{1}{2}gt_2^2. $$
+
+Colocando o tempo $t_2$ em evidência, temos: 
+
+$$ t_2 \cdot \left(v_0 \sin\theta_0 - \frac{1}{2}gt_2\right) = 0, $$
+
+o que nos dá duas raízes possíveis: a primeira raiz, $t_2 = t_1 = 0$, representa o instante exato do lançamento na origem. A segunda raiz, referente ao instante de retorno ao solo, é obtida resolvendo o termo entre parênteses: 
+
+$$ v_0 \sin\theta_0 - \frac{1}{2}gt_2 = 0. $$
+
+Isolando $t_2$, encontramos a expressão exata para o tempo total de permanência no ar: 
+
+$$ t_2 = \frac{2v_0 \sin\theta_0}{g}. $$
+
+Esse valor equivale exatamente ao dobro do tempo $t_1 = \frac{v_0 \sin\theta_0}{g}$ necessário para o foguete atingir o ponto mais alto de sua trajetória, no qual a velocidade vertical instantânea se torna nula ($v_y = 0$).
+
+Com a fórmula do tempo total no ar em mãos, substituímos o valor de $t_2$ na equação da posição horizontal para determinar o alcance $R$:
+
+$$ x = R = (v_0 \cos\theta_0)t_2. $$
+
+Realizando essa substituição, obtemos 
+
+$$ R = (v_0 \cos\theta_0) \cdot \left(\frac{2v_0 \sin\theta_0}{g}\right) $$
+
+$$ R = \frac{v_0^2 (2\sin\theta_0 \cos\theta_0)}{g}. $$
+
+Recorrendo à identidade trigonométrica do arco duplo, sabemos que 
+
+$$ 2\sin\theta_0 \cos\theta_0 = \sin(2\theta_0). $$
+
+Substituindo essa identidade na relação do alcance, chegamos à equação reduzida do alcance horizontal máximo: 
+
+$$ R = \frac{v_0^2 \sin(2\theta_0)}{g}. $$
+
+Essa fórmula demonstra que o alcance do foguete é proporcional ao quadrado do módulo da velocidade inicial e depende do seno do dobro do ângulo de lançamento, atingindo seu valor máximo quando o ângulo de disparo for de $45^\circ$, já que $\sin(2 \times 45^\circ) = \sin(90^\circ) = 1$.
+
+Por fim, ao analisar a fórmula do alcance, percebe-se que a massa $m$ do foguete não está presente em nenhum dos termos. A fundamentação física para essa independência da massa reside na Segunda Lei de Newton, dada por: 
+
+$$\mathbf{F} = m\mathbf{a}, $$
+
+na qual a força resultante sobre o corpo determina a aceleração adquirida por ele. No caso do movimento de um projétil em queda livre sem atrito, a única força que atua é a força peso 
+
+$$ \mathbf{P} = m\mathbf{g}. $$
+
+Igualando a força resultante à força peso, escrevemos 
+
+$$m\mathbf{a} = m\mathbf{g}. $$
+
+Dividindo ambos os lados da igualdade pela massa $m$, a variável de massa é cancelada, resultando em 
+
+$$ \mathbf{a} = \mathbf{g}. $$
+
+Esse cancelamento algébrico comprova que a aceleração sofrida pelo foguete durante o voo independe inteiramente de quão leve ou pesado ele seja. Como as variáveis de velocidade, posição, tempo de voo e alcance são derivadas puramente dessa aceleração gravitacional $\mathbf{g}$ e das condições iniciais de velocidade e ângulo, conclui-se que, no modelo ideal **sem resistência do ar**, dois foguetes de massas totalmente distintas lançados com a mesma velocidade inicial e no mesmo ângulo descreverão trajetórias rigorosamente idênticas e atingirão exatamente o mesmo alcance no solo.
+
+A simulação interativa a seguir exemplifica toda a explicação acima, além de adicionar a variável da resistência do ar para fins de exploração.
+
+```{ojs}
+//| panel: sidebar
+viewof v0 = Inputs.range([0, 80], {value: 35, step: 1, label: "Velocidade Inicial (m/s)"});
+viewof angulo = Inputs.range([15, 85], {value: 45, step: 1, label: "Ângulo de Decolagem (°)"});
+viewof massa = Inputs.range([0, 10], {value: 0.15, step: 0.01, label: "Massa do Foguete (kg)"});
+viewof k = Inputs.range([0, 1], {value: 0, step: 0.0005, label: "Coeficiente de Arrasto"});
+```
+
+```{ojs}
+//| panel: fill
+// Simulação física executada diretamente no navegador
+trajetoria = {
+  let dt = 0.005;
+  let g = 9.81;
+  let rad = angulo * Math.PI / 180;
+  let vx = v0 * Math.cos(rad);
+  let vy = v0 * Math.sin(rad);
+  let x = 0, y = 0;
+  let pts = [];
+
+  while (y >= 0) {
+    let v = Math.hypot(vx, vy);
+    let ax = -(k / massa) * vx * v;
+    let ay = -g - (k / massa) * vy * v;
+    vx += ax * dt;
+    vy += ay * dt;
+    x += vx * dt;
+    y += vy * dt;
+    if (y >= 0) pts.push({x: x, y: y});
+  }
+  return pts;
+}
+
+Plot.plot({
+  title: `Alcance Máximo: ${trajetoria[trajetoria.length - 1]?.x.toFixed(2)} metros`,
+  grid: true,
+  marks: [
+    Plot.line(trajetoria, {x: "x", y: "y", stroke: "#2563eb", strokeWidth: 3})
+  ]
+})
+```
+
+## Centro de massa
+Quando olhamos para um foguete de garrafa PET montado para a Mostra Brasileira de Foguetes (MOBFOG), vemos um objeto formado por várias partes com pesos e formatos diferentes: a garrafa plástica, o bico, o conteúdo em seu interior, as aletas na traseira, etc.
+
+Em vez de analisar o movimento de cada pedacinho do foguete separadamente, a Física nos permite fazer uma simplificação: existe um ponto geométrico único onde podemos considerar que toda a massa do foguete está concentrada. Esse ponto especial é chamado de **Centro de Massa (CM)**. É como se ele fosse o "ponto de equilíbrio" do foguete (se você tentasse equilibrar o foguete na ponta do dedo em posição horizontal, o local exato onde ele não penderia nem para a frente nem para trás seria a posição do seu Centro de Massa).
+
+Para localizar o Centro de Massa ao longo do corpo do foguete (tomando a base como ponto zero de referência), utilizamos uma média ponderada das massas de cada uma de suas partes e de suas respectivas distâncias até a base.
+
+Se o foguete é composto por $n$ partes com massas $m_1, m_2, \dots, m_n$ localizadas às distâncias $x_1, x_2, \dots, x_n$ a partir da base, a posição do Centro de Massa ($x_{cm}$) é dada por:
+
+$$x_{cm} = \frac{m_1 x_1 + m_2 x_2 + \dots + m_n x_n}{m_1 + m_2 + \dots + m_n}$$
+
+O que essa fórmula nos permite concluir? Se adicionarmos mais massa na parte da frente do foguete (aumentando o valor de $m$ em um $x$ grande), o valor de $x_{cm}$ aumenta, puxando o Centro de Massa para mais perto do bico. Entretanto, se a maior parte da massa estiver na traseira (como quando a garrafa está cheia de água), o Centro de Massa fica deslocado para a base.
+
+A grande utilidade do Centro de Massa está na aplicação da Segunda Lei de Newton. De acordo com essa lei, a força resultante ($\vec{F}$) exercida sobre um corpo é igual ao produto de sua massa total ($M$) pela aceleração ($\vec{a}$): 
+
+$$\vec{F} = M \cdot \vec{a}_{cm}.$$
+
+Isso significa que, durante o voo, não importa se o foguete vibra ou sofre pequenas oscilações: o seu Centro de Massa se moverá exatamente como uma única partícula submetida às forças externas.
+
+Após a saída da base e o fim da propulsão, a principal força atuante no eixo vertical é a força peso ($\vec{P} = M\cdot\vec{g}$), direcionada para o centro da Terra. Sob a ação constante da gravidade ($g$), o Centro de Massa descreverá uma trajetória parabólica contínua no ar, obedecendo às equações do movimento em duas dimensões, como já visto na seção anterior!
+
+Na MOBFOG, o objetivo é fazer com que o foguete de garrafa PET alcance a maior distância horizontal possível no solo. Para isso, o voo precisa ser estável, ou seja, o foguete deve subir cortando o ar em linha reta, sem tombar ou girar de forma descontrolada.
+
+A posição do Centro de Massa é o primeiro parâmetro que pode ser ajustado para garantir a estabilidade:
+
++ A influência do combustível (água): Quando colocamos água no foguete antes do lançamento, a massa da água fica acumulada na região inferior. Isso puxa o $x_{cm}$ para perto da base.
+
++ O fenômeno da massa variável: No momento do disparo, o ar comprimido expulsa a água rapidamente pela mola de lançamento. À medida que a água sai, a massa total do sistema ($M$) diminui e a posição do Centro de Massa ($x_{cm}$) se desloca continuamente em direção ao bico durante os primeiros décimos de segundo de voo.
+
++ O uso do lastro no bico: Para garantir que o Centro de Massa fique bem à frente mesmo após toda a água ser expelida, adiciona-se uma pequena massa de modelar (lastro) no interior da coifa (bico). Isso aumenta o valor ponderado de $m \cdot x$ na ponta superior do foguete, garantindo que o $x_{cm}$ permaneça próximo da parte frontal durante todo o trajeto.
+
+Saber localizar e deslocar o **Centro de Massa** para a frente do foguete é apenas metade do segredo para um voo perfeito. O Centro de Massa cuida da distribuição das *massas* e do peso do foguete.
+
+A simulação a seguir demonstra a posição do centro de massa em um foguete de garrafa PET com água como seu combustível.
+
+```{ojs}
+//| panel: sidebar
+viewof m_garrafa_g = Inputs.range([30, 150], {value: 85, step: 5, label: "Massa Garrafa PET (g)"});
+viewof m_bico_g = Inputs.range([0, 1000], {value: 40, step: 5, label: "Massa Bico/Lastro (g)"});
+viewof vol_agua_ml = Inputs.range([0, 1000], {value: 500, step: 50, label: "Volume de Água (mL)"});
+viewof m_aletas_g = Inputs.range([0, 50], {value: 15, step: 1, label: "Massa das Aletas (g)"});
+```
+
+```{ojs}
+//| panel: fill
+// 1. Parâmetros geométricos e físicas
+L_foguete = 35.0;  // Comprimento total (cm)
+R_garrafa = 4.5;   // Raio do corpo (cm)
+
+// Posições dos Centros de Massa individuais (em cm a partir da base)
+x_garrafa = 13.0;  // CM da garrafa (metade do corpo de 26 cm)
+x_bico = 33.0;     // Posição do bico (cm)
+x_aletas = 4.0;    // CM das aletas (metade da altura de 8 cm)
+
+// 2. Cálculos da água e das massas
+m_garrafa = m_garrafa_g;
+m_bico = m_bico_g;
+m_aletas = m_aletas_g;
+
+m_agua = vol_agua_ml; // 1 mL = 1 g
+area_base = Math.PI * Math.pow(R_garrafa, 2);
+h_agua = Math.min(m_agua / area_base, 25.0);
+x_agua = h_agua > 0 ? h_agua / 2.0 : 0.0;
+
+// Massa Total e Média Ponderada do CM
+M_total = m_garrafa + m_bico + m_agua + m_aletas;
+x_cm = ((m_garrafa * x_garrafa) + (m_bico * x_bico) + (m_agua * x_agua) + (m_aletas * x_aletas)) / M_total;
+
+// 3. Dados de cada parte do foguete
+bico_data = [
+  {x: -R_garrafa, y: 26},
+  {x: 0, y: L_foguete},
+  {x: R_garrafa, y: 26}
+];
+
+aleta_esq = [
+  {x: -R_garrafa - 3.5, y1: 0, y2: 0},
+  {x: -R_garrafa, y1: 0, y2: 8}
+];
+
+aleta_dir = [
+  {x: R_garrafa, y1: 0, y2: 8},
+  {x: R_garrafa + 3.5, y1: 0, y2: 0}
+];
+
+// 4. Desenho do Foguete
+Plot.plot({
+  title: `Massa Total: ${M_total.toFixed(1)} g  |  Posição do CM: ${x_cm.toFixed(2)} cm`,
+  width: 480,
+  height: 600,
+  grid: true,
+  x: {domain: [-10, 10], label: "Largura do Foguete (cm)"},
+  y: {domain: [-2, 38], label: "Altura a partir da Base (cm)"},
+  marks: [
+    // Aletas Traseiras
+    Plot.areaY(aleta_esq, {x: "x", y1: "y1", y2: "y2", fill: "#34495e"}),
+    Plot.areaY(aleta_dir, {x: "x", y1: "y1", y2: "y2", fill: "#34495e"}),
+
+    // Corpo da Garrafa PET
+    Plot.rect([-R_garrafa], {
+      x1: -R_garrafa, 
+      x2: R_garrafa, 
+      y1: 0, 
+      y2: 26, 
+      fill: "#ecf0f1", 
+      stroke: "#2c3e50", 
+      strokeWidth: 2
+    }),
+
+    // Coluna de Água
+    h_agua > 0 ? Plot.rect([-R_garrafa], {
+      x1: -R_garrafa + 0.1, 
+      x2: R_garrafa - 0.1, 
+      y1: 0.1, 
+      y2: h_agua, 
+      fill: "#3498db", 
+      fillOpacity: 0.6
+    }) : null,
+
+    // Bico / Coifa (Triângulo)
+    Plot.areaY(bico_data, {x: "x", y1: 26, y2: "y", fill: "#e74c3c", stroke: "#c0392b", strokeWidth: 2}),
+
+    // Linha do CM da Água
+    h_agua > 0 ? Plot.ruleY([x_agua], {stroke: "#2980b9", strokeDasharray: "3,3", strokeWidth: 1.5}) : null,
+
+    // Linha do Centro de Massa Total
+    Plot.ruleY([x_cm], {stroke: "#e67e22", strokeWidth: 2.5, strokeDasharray: "5,5"}),
+
+    // Ponto Marcador do CM Total
+    Plot.dot([{x: 0, y: x_cm}], {x: "x", y: "y", r: 8, fill: "#f1c40f", stroke: "#d35400", strokeWidth: 2.5})
+  ]
+})
+```
+Porém, conforme o foguete se desloca pelo ar a altas velocidades, o ar exerce forças de resistência sobre toda a superfície da garrafa e das aletas. O ponto onde essa força aerodinâmica resultante atua é chamado de **Centro de Pressão (CP)**.
+
+## Centro de pressão
+Na seção anterior, vimos que o Centro de Massa é o ponto onde podemos considerar concentrada toda a massa do foguete. No entanto, quando o foguete é lançado e começa a se deslocar pelo ar, surge um segundo ponto igualmente decisivo para a física do voo: o **Centro de Pressão (CP)**.
+
+O Centro de Pressão (CP) é o ponto geométrico onde atua a resultante de todas as forças aerodinâmicas, ou seja, a força de resistência exercida pelo ar sobre a superfície externa do foguete durante o movimento.
+
+Enquanto o Centro de Massa depende unicamente da distribuição de peso e massa do veículo, o Centro de Pressão depende exclusivamente da *geometria externa* (a área e o formato da superfície exposta ao vento). Além disso, diferentemente do Centro de Massa, o Centro de Pressão só existe de fato quando o foguete está em movimento em relação ao ar.
+
+Para determinar com precisão o Centro de Pressão de foguetes reais, engenheiros utilizam simulações computacionais complexas de mecânica dos fluidos. Contudo, para os foguetes de garrafa PET, existe um método prático e surpreendentemente preciso desenvolvido na literatura de ensino de Física: **o Método da Silhueta de Papelão**.
+
+Devido à simetria do foguete, a posição do Centro de Pressão ao longo do seu comprimento coincide aproximadamente com o Centro de Massa de uma projeção bidimensional plana da sua silhueta, dessa forma o método se baseia em 4 etapas:
+
+1. **Desenhar a silhueta:** 
+
+Projeta-se o contorno lateral exato do foguete (com o bico, o corpo cilíndrico e as aletas) em uma folha de papelão rígido e uniforme.
+
+2. **Recortar a forma:**
+
+Recorta-se cuidadosamente a figura do foguete no papelão.
+
+
+3. **Encontrar o ponto de equilíbrio:** 
+
+Tenta-se equilibrar a silhueta de papelão na ponta de uma régua ou do dedo.
+
+4. **Localizar o CP:** 
+
+O ponto de equilíbrio onde o papelão se sustenta na horizontal representa o Centro de Massa daquela área plana, o qual coincide com a posição do Centro de Pressão do foguete tridimensional.
+
+A interação entre o Centro de Massa e o Centro de Pressão é o que define se o foguete subirá reto como uma flecha ou se tombará e girará sem controle no ar.
+
+Durante o voo, o foguete tende a girar naturalmente em torno do seu Centro de Massa, que funciona como seu eixo de rotação. Se uma rajada de vento lateral desviar o bico do foguete da sua trajetória, o ar passará a colidir com a lateral do corpo, exercendo uma força aerodinâmica aplicada no Centro de Pressão.
+
+Para que o voo seja estável, vale a **Regra de Ouro da Aerodinâmica da MOBFOG**:
+
+***O Centro de Massa deve estar posicionado À FRENTE (acima, mais próximo do bico) do Centro de Pressão.***
+
+Por que essa separação funciona? Quando o **CM está acima do CP**, a força do ar atingindo o CP empurra a traseira do foguete de volta para o alinhamento correto. Isso gera um **torque restaurador**, o mesmo efeito que faz uma flecha ou uma biruta se alinhar automaticamente com o vento.
+
+Se o Centro de Pressão estiver à frente do Centro de Massa, a força do ar empurrará o bico ainda mais para longe da trajetória, fazendo com que o foguete gire em torno de si mesmo e caia logo após sair da base.
+
+Na construção prática de um foguete para a MOBFOG, a distância entre o Centro de Massa e o Centro de Pressão é chamada de **Margem de Estabilidade**:
+
+$$\text{Margem de Estabilidade} = x_{cm} - x_{cp}. $$
+
+Para garantir um voo seguro e reto em um foguete de garrafa PET, recomenda-se que o Centro de Massa esteja posicionado pelo menos 1,5 cm (ou cerca de 1 a 2 diâmetros do corpo do foguete) acima do Centro de Pressão.Para ajustar essa margem e obter o voo perfeito, deve-se trabalhar com duas alavancas de engenharia:
+
+- Aumentar as Aletas (Empenas): Aumentar o tamanho ou o número das aletas instaladas na traseira adiciona área de superfície na base do foguete. Isso puxa o Centro de Pressão para trás, afastando-o do bico.
+
+- Adicionar Lastro no Bico: Colocar uma massa extra (como massinha de modelar) na coifa puxa o Centro de Massa para a frente.
+
+A combinação dessas duas etapas é a chave do sucesso para alcançar distâncias superiores a 100 metros.
+
+```{ojs}
+//| panel: sidebar
+viewof m_garrafa_g_est = Inputs.range([30, 500], {value: 85, step: 5, label: "Massa Garrafa PET (g)"});
+viewof m_bico_g_est = Inputs.range([0, 1000], {value: 40, step: 5, label: "Massa Bico/Lastro (g)"});
+viewof vol_agua_ml_est = Inputs.range([0, 1000], {value: 500, step: 10, label: "Volume de Água (mL)"});
+viewof m_aletas_g_est = Inputs.range([0, 50], {value: 15, step: 1, label: "Massa das Aletas (g)"});
+viewof h_aletas_cm = Inputs.range([4, 15], {value: 8, step: 0.5, label: "Altura da Aleta (cm)"});
+viewof larg_aletas_cm = Inputs.range([2, 8], {value: 3.5, step: 0.5, label: "Largura da Aleta (cm)"});
+```
+
+```{ojs}
+//| panel: fill
+// 1. Geometria do Foguete (Variáveis isoladas para este simulador)
+L_foguete_est = 35.0;          // Comprimento total (cm)
+R_garrafa_est = 4.5;           // Raio do corpo (cm)
+D_garrafa_est = 2 * R_garrafa_est; // Diâmetro do foguete (9 cm)
+
+// Posições dos Centros de Massa individuais (cm a partir da base)
+x_garrafa_pos_est = 13.0; 
+x_bico_pos_est = 33.0;     
+x_aletas_pos_est = h_aletas_cm / 2.0; 
+
+// 2. Cálculo do Centro de Massa (x_cm)
+m_garrafa_val_est = m_garrafa_g_est;
+m_bico_val_est = m_bico_g_est;
+m_aletas_val_est = m_aletas_g_est;
+m_agua_val_est = vol_agua_ml_est;
+
+area_base_est = Math.PI * Math.pow(R_garrafa_est, 2);
+h_agua_est = Math.min(m_agua_val_est / area_base_est, 25.0);
+x_agua_est = h_agua_est > 0 ? h_agua_est / 2.0 : 0.0;
+
+M_total_est = m_garrafa_val_est + m_bico_val_est + m_agua_val_est + m_aletas_val_est;
+x_cm_est = ((m_garrafa_val_est * x_garrafa_pos_est) + (m_bico_val_est * x_bico_pos_est) + (m_agua_val_est * x_agua_est) + (m_aletas_val_est * x_aletas_pos_est)) / M_total_est;
+
+// 3. Cálculo Estimado do Centro de Pressão (x_cp)
+A_corpo_est = D_garrafa_est * 26.0;
+x_cp_corpo_est = 13.0;
+
+A_coifa_est = 0.5 * D_garrafa_est * (L_foguete_est - 26.0);
+x_cp_coifa_est = 26.0 + (1.0 / 3.0) * (L_foguete_est - 26.0);
+
+// Área e CP das aletas
+A_aleta_total_est = 3 * (0.5 * larg_aletas_cm * h_aletas_cm);
+x_cp_aleta_est = h_aletas_cm / 3.0;
+
+A_total_aerod_est = A_corpo_est + A_coifa_est + A_aleta_total_est;
+x_cp_est = ((A_corpo_est * x_cp_corpo_est) + (A_coifa_est * x_cp_coifa_est) + (A_aleta_total_est * x_cp_aleta_est)) / A_total_aerod_est;
+
+// 4. Margem de Estabilidade em Calibres
+margem_calibres_est = (x_cm_est - x_cp_est) / D_garrafa_est;
+
+status_est = margem_calibres_est < 0.5 ? "INSTÁVEL (Perigo de rodopiar!)" :
+             (margem_calibres_est <= 2.0 ? "ESTÁVEL (Pronto para Lançamento!)" : "SUPERESTÁVEL (Sensível ao Vento)");
+
+// 5. Dados Geométricos para o Desenho
+bico_data_est = [
+  {x: -R_garrafa_est, y: 26},
+  {x: 0, y: L_foguete_est},
+  {x: R_garrafa_est, y: 26}
+];
+
+aleta_esq_est = [
+  {x: -R_garrafa_est - larg_aletas_cm, y1: 0, y2: 0},
+  {x: -R_garrafa_est, y1: 0, y2: h_aletas_cm}
+];
+
+aleta_dir_est = [
+  {x: R_garrafa_est, y1: 0, y2: h_aletas_cm},
+  {x: R_garrafa_est + larg_aletas_cm, y1: 0, y2: 0}
+];
+
+// Desenho no Observable Plot
+Plot.plot({
+  title: `Margem: ${margem_calibres_est.toFixed(2)} calibres | Status: ${status_est}`,
+  width: 500,
+  height: 600,
+  grid: true,
+  x: {domain: [-12, 12], label: "Largura do Foguete (cm)"},
+  y: {domain: [-2, 38], label: "Altura a partir da Base (cm)"},
+  marks: [
+    // Aletas
+    Plot.areaY(aleta_esq_est, {x: "x", y1: "y1", y2: "y2", fill: "#34495e"}),
+    Plot.areaY(aleta_dir_est, {x: "x", y1: "y1", y2: "y2", fill: "#34495e"}),
+
+    // Corpo da Garrafa PET
+    Plot.rect([-R_garrafa_est], {
+      x1: -R_garrafa_est, x2: R_garrafa_est, y1: 0, y2: 26, 
+      fill: "#ecf0f1", stroke: "#2c3e50", strokeWidth: 2
+    }),
+
+    // Coluna de Água
+    h_agua_est > 0 ? Plot.rect([-R_garrafa_est], {
+      x1: -R_garrafa_est + 0.1, x2: R_garrafa_est - 0.1, y1: 0.1, y2: h_agua_est, 
+      fill: "#3498db", fillOpacity: 0.6
+    }) : null,
+
+    // Bico / Coifa
+    Plot.areaY(bico_data_est, {x: "x", y1: 26, y2: "y", fill: "#e74c3c", stroke: "#c0392b", strokeWidth: 2}),
+
+    // Linha e Marcador do Centro de Massa (CM) - Bola Amarela / Linha Laranja
+    Plot.ruleY([x_cm_est], {stroke: "#e67e22", strokeWidth: 2.5, strokeDasharray: "5,5"}),
+    Plot.dot([{x: 0, y: x_cm_est}], {x: "x", y: "y", r: 8, fill: "#f1c40f", stroke: "#d35400", strokeWidth: 2.5}),
+
+    // Linha e Marcador do Centro de Pressão (CP) - Bola Vermelha / Linha Vermelha
+    Plot.ruleY([x_cp_est], {stroke: "#c0392b", strokeWidth: 2.5}),
+    Plot.dot([{x: 0, y: x_cp_est}], {x: "x", y: "y", r: 8, fill: "#e74c3c", stroke: "#900c3f", strokeWidth: 2.5})
+  ]
+})
+```
+
+# Combustíveis
+
+## Água e ar comprimido
+
+## Reação sal e vinagre
+
+# O foguete
+
+## Material
+
+## A aerodinâmica
+
+# Base
+
+## Nível 3
+
+## Nível 4
+
+# Referências
