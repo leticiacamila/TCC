@@ -8,15 +8,17 @@ format:
     toc-depth: 3
     code-fold: show
     code-tools: true
+bibliography: Referencias.bib
+csl: abnt.csl
+nocite: |  
+  @*
 jupyter: python3
 ---
 
 # Introdução
 Descrever um pouco sobre a MOBFOG.
 
-# Conteúdos
-
-## O vôo do foguete
+# O vôo do foguete
 
 A explicação do disparo de um foguete no ar, considerando o momento após a fase de impulsão inicial, no qual o foguete se move livremente pelo ar como um projétil na ausência de atrito, apoia-se nos conceitos da mecânica vetorial e nas leis do movimento desenvolvidas por Isaac Newton.
 
@@ -155,7 +157,7 @@ Plot.plot({
 })
 ```
 
-## Centro de massa
+# Centro de massa
 Quando olhamos para um foguete de garrafa PET montado para a Mostra Brasileira de Foguetes (MOBFOG), vemos um objeto formado por várias partes com pesos e formatos diferentes: a garrafa plástica, o bico, o conteúdo em seu interior, as aletas na traseira, etc.
 
 Em vez de analisar o movimento de cada pedacinho do foguete separadamente, a Física nos permite fazer uma simplificação: existe um ponto geométrico único onde podemos considerar que toda a massa do foguete está concentrada. Esse ponto especial é chamado de **Centro de Massa (CM)**. É como se ele fosse o "ponto de equilíbrio" do foguete (se você tentasse equilibrar o foguete na ponta do dedo em posição horizontal, o local exato onde ele não penderia nem para a frente nem para trás seria a posição do seu Centro de Massa).
@@ -290,7 +292,7 @@ Plot.plot({
 ```
 Porém, conforme o foguete se desloca pelo ar a altas velocidades, o ar exerce forças de resistência sobre toda a superfície da garrafa e das aletas. O ponto onde essa força aerodinâmica resultante atua é chamado de **Centro de Pressão (CP)**.
 
-## Centro de pressão
+# Centro de pressão
 Na seção anterior, vimos que o Centro de Massa é o ponto onde podemos considerar concentrada toda a massa do foguete. No entanto, quando o foguete é lançado e começa a se deslocar pelo ar, surge um segundo ponto igualmente decisivo para a física do voo: o **Centro de Pressão (CP)**.
 
 O Centro de Pressão (CP) é o ponto geométrico onde atua a resultante de todas as forças aerodinâmicas, ou seja, a força de resistência exercida pelo ar sobre a superfície externa do foguete durante o movimento.
@@ -557,15 +559,437 @@ A pressurização de garrafas PET exige rigoroso controle de segurança para evi
 Seguindo as recomendações de segurança, deve-se adotar como limite operacional máximo de segurança o valor de $112 \text{ PSI}$ ($70\%$ do limite de ruptura). O manômetro instalado na base de lançamento é o instrumento obrigatório para aferir essa pressão antes do disparo do gatilho.
 
 # O foguete
+Inspirado na arquitetura dos foguetes aeroespaciais reais[18][19], o protótipo confeccionado com garrafas de polietileno tereftalato (PET) é dividido em seções funcionais bem definidas
 
-## Material
+```{ojs}
+//| echo: false
+Plot.plot({
+  width: 700,
+  height: 650,
+  marginRight: 260,
+  x: { domain: [-12, 12], axis: null },
+  y: { domain: [-10, 42], axis: null },
+  marks: [
+    // 1. Aletas Traseiras (Esquerda e Direita)
+    Plot.areaY([
+      {x: -7.5, y1: 0, y2: 0},
+      {x: -4, y1: 0, y2: 10}
+    ], {x: "x", y1: "y1", y2: "y2", fill: "#34495e", stroke: "#1a252f"}),
 
-## A aerodinâmica
+    Plot.areaY([
+      {x: 4, y1: 0, y2: 10},
+      {x: 7.5, y1: 0, y2: 0}
+    ], {x: "x", y1: "y1", y2: "y2", fill: "#34495e", stroke: "#1a252f"}),
+
+    // Base das aletas (Retângulos)
+    Plot.rect([{x1: -8, y1: -0.8, x2: -3.5, y2: 0}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#bdc3c7", stroke: "#2c3e50"
+    }),
+    Plot.rect([{x1: 3.5, y1: -0.8, x2: 8, y2: 0}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#bdc3c7", stroke: "#2c3e50"
+    }),
+
+    // 2. Corpo do Tanque (Cilindro Central)
+    Plot.rect([{x1: -4, y1: 0, x2: 4, y2: 26}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 2
+    }),
+
+    // 3. Coifa / Ogiva (Triângulo Principal)
+    Plot.areaY([
+      {x: -4, y: 26},
+      {x: 0, y: 38},
+      {x: 4, y: 26}
+    ], {x: "x", y1: 26, y2: "y", fill: "#ecf0f1", stroke: "#2c3e50", strokeWidth: 2}),
+
+    // 4. Elementos de Texto do Esquema
+    Plot.text([{x: 0, y: 39.5, t: "▲"}], {x: "x", y: "y", text: "t", fontSize: 16, fill: "#2c3e50"}),
+    Plot.text([{x: 0, y: -2, t: "( )"}], {x: "x", y: "y", text: "t", fontSize: 16, fill: "#2c3e50"}),
+    Plot.text([{x: 0, y: -4, t: "▲"}], {x: "x", y: "y", text: "t", fontSize: 14, fill: "#2c3e50"}),
+    Plot.ruleX([0], {y1: -4.8, y2: -6.5, stroke: "#2c3e50", strokeWidth: 1.5}),
+
+    // 5. Rótulos Explicativos (À Direita)
+    Plot.text([{x: 5, y: 39.5, t: "▲  Bico / Ponta Cônica"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontWeight: "bold", fontSize: 13, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 5, y: 32, t: "[ COIFA / OGIVA ]\n(Contrapeso interno: ~80g a 100g de lastro)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", lineHeight: 1.3, fontSize: 12, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 5, y: 18, t: "[ CÂMARA DE PRESSURIZAÇÃO / TANQUE ]\n(Garrafa PET cilíndrica de paredes retas)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", lineHeight: 1.3, fontSize: 12, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 8.5, y: 4, t: "[ ALETAS / EMPENAS (3 ou 4) ]\n(Fixadas simetricamente na saia traseira)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", lineHeight: 1.3, fontSize: 12, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 0, y: -8.5, t: "[ TUBEIRA / GARGALO ]\n(Bocal de ejeção do propelente)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", lineHeight: 1.3, fontSize: 12, fill: "#2c3e50"
+    })
+  ]
+})
+```
+
+## Câmara de Pressurização e Tanque de Combustível
+O tanque de pressurização é o corpo central do foguete e atua como a câmara de compressão onde o propelente é armazenado e pressurizado.
+
+**Função Estrutural:** Suportar o estresse mecânico causado pela pressão interna do gás acumulado e orientar o escoamento do fluido em direção ao gargalo durante a eversão do propelente.
+
+**Seleção de Garrafas PET e Tipos de Moldes:** A escolha da garrafa PET é determinante para a segurança e para o desempenho aerodinâmico do voo:
+
+- **Garrafas PET de Paredes Retas (2,0 L):** São as mais recomendadas pela MOBFOG. Apresentam perfil cilíndrico uniforme, promovendo a simetria radial necessária para a distribuição homogênea de massa e suportando pressões operacionais elevadas sem deformações assimétricas
+
+- **Garrafas com "Cinturas" (ex: garrafas tradicionais de marca de refrigerante de cola):** Devem ser evitadas para a câmara de pressão. Seu material plástico é mais fino e menos resistente, o que aumenta o risco de vazamento de combustível, deformações sob tensão mecânica e explosões por fadiga após reutilizações sucessivas.
+
+- **Garrafas de Formato Arredondado (ex: tônica/Schweppes de 1,5 L):** Embora ofereçam um contorno aerodinâmico interessante, possuem plástico de menor espessura e sensível a aumentos de pressão, apresentando baixo limite de ruptura mecânica e maior facilidade de desgaste.
+
+- **Garrafas Retornáveis:** Apresentam espessura de parede superior às recicláveis comuns, suportando maior *stress* mecânico e pressões mais altas sem risco de ruptura prematura.
+
+## Coifa 
+A coifa é a estrutura cônica ou ogival afixada na parte frontal superior da câmara de pressurização (sobre o fundo da garrafa PET que atua como reservatório).
+
+**Função Aerodinâmica:** Protege a extremidade do foguete e ajusta os contornos geométricos da parte frontal para que as correntes de ar escoem suavemente ao longo da fuselagem. Isso reduz significativamente o coeficiente de arrasto aerodinâmico, minimizando a força de resistência do ar oposta ao movimento.
+
+**Métodos de Construção e Materiais:**
+
++ Corte de Garrafa PET: Corta-se a parte cônica superior de uma segunda garrafa PET idêntica e encaixa-se no fundo da garrafa principal.
+
++ Chapéu de Festa / Cones Rígidos: Junção e colagem de cones de papelão rígido ou plástico sobre a ponta para afunilar a coifa. 
+
++ Impressão 3D (PLA): Produção de coifas em Polímero Ácido Polilático (PLA) com formato padronizado, encaixando-se perfeitamente na base da garrafa.
+
+**Alinhamento Axial:** A coifa deve ficar rigorosamente alinhada com o eixo maior (longitudinal) da garrafa para evitar assimetrias no escoamento do ar que induzam desvios laterais na trajetória do voo.
+
+## Lastro
+O lastro consiste em uma massa adicional colocada obrigatoriamente no interior da coifa, o mais próximo possível da ponta frontal (bico) do foguete.
+
+- **Papel Físico na Estabilidade:** A adição dessa massa extra (denominada contrapeso) é fundamental para puxar a posição do Centro de Massa em direção à frente do foguete. Isso garante a Regra de Ouro da Aerodinâmica da MOBFOG, mantendo o CM a uma distância mínima de *1,5 cm (ou cerca de 1 a 2 diâmetros do corpo do foguete) acima do Centro de Pressão*. Caso essa separação não exista, a força do ar na parte inferior do foguete inclinado provocará um torque que fará o veículo girar descontroladamente em torno do seu próprio eixo ("cabular") logo após sair da base.
+
+- **Materiais Utilizados:** Utiliza-se um balão de festa (número 5 ou 6) preenchido com água ou areia úmida até atingir uma massa entre 80 g e 100 g. O balão é amarrado e preso no gargalo interno da coifa sob a tampa. Alternativamente, utiliza-se massa de modelar (plastilina) fixada firmemente no vértice interno da coifa.
+
+## Aletas/Empenas
+As aletas (ou empenas) são pequenas superfícies aerodinâmicas planas montadas na extremidade inferior (traseira) do foguete.
+
+- **Função Aerodinâmica e Controle:** As aletas fornecem estabilidade direcional e controle de trajetória ao foguete durante o voo. Elas atuam aumentando a área de superfície exposta ao ar na região traseira, o que empurra a posição do Centro de Pressão para trás do Centro de Massa. Esse arranjo gera um torque restaurador que alinha automaticamente o bico do foguete com a direção do vento relativo sempre que ocorrer uma perturbação angular.
+
+- **Número e Disposição de Aletas:**
+  * **Três Aletas (120°):** Permitem atingir uma velocidade de voo ligeiramente maior devido à menor área de superfície e menor arrasto de atrito. Exigem medição precisa da circunferência do tanque dividida em três partes iguais (ângulos de 120°).
+  * **Quatro Aletas (90°):** É o arranjo mais comum, tradicional e preferido na MOBFOG. O layout simétrico em quatro direções perpendiculares (90°) distribui as forças aerodinâmicas de forma uniforme ao redor do corpo, garantindo estabilidade direcional consistente e minimizando os efeitos de rotação indesejada no eixo longitudinal.
+
+- **Materiais e Espessura:**
+  * As aletas devem ser confeccionadas com materiais leves, finos, impermeáveis e rígidos. Recomendam-se chapas de plástico PVC A4, poliestireno, placas alveolares de polionda, isopor de alta densidade, pastas plásticas de arquivo ou peças impressas em 3D de PLA.
+  * **Aviso de Espessura:** Recomenda-se priorizar materiais com espessura **superior a 2 mm**. Aletas muito finas ou flexíveis podem sofrer flambagem e vibração sob altas cargas aerodinâmicas, tornando o voo instável.
+  * **Colagem:** A fixação é feita com cola instantânea ou fita adesiva de alta aderência diretamente no tanque ou em uma "saia" traseira de PET. **Não se deve utilizar cola quente**, pois o calor excessivo deforma e fragiliza as paredes de plástico do tanque de pressurização.
+* **Uso da "Saia" Traseira:** Consiste em um anel de cerca de 12 cm cortado do corpo de outra garrafa PET e colado na base da câmara de compressão. As aletas são coladas diretamente nessa saia. Essa técnica facilita o alinhamento das aletas e evita danificar o tanque principal. A saia não deve ultrapassar excessivamente o gargalo para não obstruir a visão do gatilho e das abraçadeiras na base de lançamento.
+
+## Tubeira / Gargalo
+Na montagem do foguete de garrafa PET, a tubeira é representada pela região convergente do próprio gargalo e pela rosca da garrafa.
+
+- **Função Propulsora:** Funciona como o bocal convergente de exaustão do motor. Durante o disparo, a energia potencial de pressão acumulada pelos gases força a expulsão do fluido propulsor (água e ar comprimido no Nível III ou vinagre e $\text{CO}_2$ no Nível IV) em alta velocidade através do gargalo. Essa ejeção de massa em alta velocidade gera a força de empuxo que impulsiona o foguete segundo a Terceira Lei de Newton.
+
+- **Vedação e Eliminação de Folga no Lançamento:** Como o diâmetro interno do gargalo de uma garrafa PET é ligeiramente maior do que o diâmetro externo do tubo disparador de PVC da base (20 mm), é necessário instalar um anel de vedação (retirado do bico de um balão de aniversário nº 6,5") reforçado com fita isolante ou esparadrapo sobre o tubo da base. Isso elimina o vazamento de água/pressão no momento da pressurização.
 
 # Base
+Na Mostra Brasileira de Foguetes (MOBFOG), a base de lançamento é a estrutura responsável por dar suporte físico, permitir a pressurização do reservatório, garantir a retenção mecânica do foguete até o momento do disparo e guiar o vetor de velocidade inicial no ângulo de elevação desejado (ANGELO, 2021; NOIC, 2025a, 2025b).
 
-## Nível 3
+A construção da base de lançamento exige um planejamento focado na segurança dos estudantes e na reprodutibilidade dos ensaios experimentais. Uma base eficiente deve cumprir simultaneamente quatro funções centrais (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b):
 
-## Nível 4
++ Estabilização Angular: Sustentar o tubo disparador em um ângulo de lançamento fixo de $45^\circ$ em relação ao solo plano, otimizando o alcance horizontal máximo do voo parabólico.
+
++ Vedação Pneumática/Hidráulica: Evitar o vazamento prematuro de ar, água ou reagentes químicos durante a fase de pressurização do foguete.
+
++ Travamento e Retenção Mecânica: Conter o foguete acoplado à base enquanto a pressão interna se eleva até o nível operacional desejado.
+
++ Acionamento Seguro à Distância: Permitir a liberação rápida do gatilho por meio de um cordão de disparo com comprimento de segurança (entre 5 m e 6 m), mantendo os estudantes afastados da linha de pressão no momento do disparo.
+
+## Componentes Estruturais da Base
+Inspirada nos protótipos de baixo custo validados na literatura da MOBFOG, a base de lançamento é montada a partir da combinação de uma **estrutura hidráulica de PVC (policloreto de vinil)** e um **suporte de madeira/MDF** (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b).
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width: 750,
+  height: 520,
+  marginRight: 280,
+  x: { domain: [-12, 12], axis: null },
+  y: { domain: [-2, 32], axis: null },
+  marks: [
+    // 1. Topo - Foguete PET
+    Plot.text([{x: 0, y: 30, t: "[ FOGUETE DE GARRAFA PET ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 13, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Seta vertical 1 (Foguete -> Tubo Disparador)
+    Plot.ruleX([0], {y1: 29, y2: 26.5, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 26.2, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 2. Caixa: Tubo Disparador + Mecanismo de Gatilho
+    Plot.rect([{x1: -6, y1: 18, x2: 6, y2: 25}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 2
+    }),
+    Plot.line([{x: -6, y: 21.5}, {x: 6, y: 21.5}], {x: "x", y: "y", stroke: "#2c3e50", strokeWidth: 1.2}),
+
+    Plot.text([{x: 0, y: 23.3, t: "TUBO DISPARADOR DE PVC 20mm"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+    Plot.text([{x: 0, y: 19.7, t: "MECANISMO DE GATILHO"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Anotações da direita (Caixa 2)
+    Plot.text([{x: 6.8, y: 23.3, t: "<-- Anel de Vedação (Bico de Balão + Esparadrapo)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 6.8, y: 19.7, t: "<-- Abraçadeiras de Nylon + Trava de Luva 40mm"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+
+    // Linha tracejada 2 (Mecanismo -> Sistema de Pressurização)
+    Plot.ruleX([0], {y1: 18, y2: 13, stroke: "#2c3e50", strokeWidth: 1.5, strokeDasharray: "4,4"}),
+
+    // 3. Caixa: Sistema de Pressurização e Controle
+    Plot.rect([{x1: -7.5, y1: 6, x2: 7.5, y2: 13}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 2
+    }),
+
+    Plot.text([{x: 0, y: 11.5, t: "SISTEMA DE PRESSURIZAÇÃO E CONTROLE"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+    Plot.text([{x: -6.8, y: 9.3, t: "• Nível III: Válvula de Pneu de Bicicleta"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+    Plot.text([{x: -6.8, y: 7.5, t: "• Nível IV: Manômetro + Registro Aborto"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+
+    // Linha tracejada 3 (Pressurização -> Suporte)
+    Plot.ruleX([0], {y1: 6, y2: 3, stroke: "#2c3e50", strokeWidth: 1.5, strokeDasharray: "4,4"}),
+
+    // 4. Caixa: Suporte de Madeira / Base H
+    Plot.rect([{x1: -6, y1: -0.5, x2: 6, y2: 3}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 2
+    }),
+
+    Plot.text([{x: 0, y: 1.25, t: "SUPORTE DE MADEIRA / BASE H"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Anotação da direita (Caixa 4)
+    Plot.text([{x: 6.8, y: 1.25, t: "<-- Fixação e Ajuste Angular em 45°"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    })
+  ]
+})
+```
+
+### Estrutura de Apoio e Alicerce
+- **Suporte de Madeira/MDF:** Constituído por tábuas de madeira maciça ou compensado estrutural interligadas por dobradiças metálicas e cantoneiras (ANGELO, 2021). A dobradiça permite ajustar e travar a inclinação da calha disparadora exatamente no ângulo de $45^\circ$ em relação à prancha horizontal de apoio no solo (ANGELO, 2021).
+
+- **Alicerce em "H" de PVC:** Alternativamente, a base pode ser montada em formato de "H" utilizando tubos de PVC de 20 mm ou 25 mm e conexões em forma de "Tê" e joelhos/curvas de $45^\circ$, colados com adesivo plástico para garantir estabilidade sobre o gramado (BEXIGA, 2015; SILVA et al., 2022; NOIC, 2025a).
+
+### Tubo Disparador e Sistema de Vedação
+- **Tubo Disparador de PVC (20 mm):** Segmento de cano rígido de PVC marrom de 20 mm de diâmetro e comprimento entre 25 cm e 30 cm, por onde o gargalo da garrafa PET é inserido (BEXIGA, 2015; ANGELO, 2021).
+
+- **Anel de Vedação:** Como o diâmetro interno do gargalo de uma garrafa PET é ligeiramente superior ao diâmetro externo do cano de 20 mm, instala-se um anel de borracha (retirado do bico de um balão de festa nº 6,5") envolto por fita esparadrapo de algodão ou fita veda-rosca sobre o tubo (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b). Esse anel elimina a folga mecânica, garantindo a vedação hermética da água e do gás pressurizado (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b).
+
+### Mecanismo de Gatilho e Trava de Retenção
+- **Abraçadeiras de Nylon:** Posicionam-se 8 abraçadeiras plásticas de Nylon (com cerca de 9 cm a 10 cm de comprimento) distribuídas de forma simétrica ao redor do tubo de lançamento (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b). As cabeças denteadas das abraçadeiras de Nylon devem ficar posicionadas cerca de 1 cm acima do anel de vedação, de modo a abraçar o relevo do anel do gargalo da garrafa PET (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b).
+
+- **Abraçadeira Metálica de Aperto:** Uma abraçadeira de metal tipo rosca sem fim (de $3/4''$ a $1''$) é apertada sobre a haste das abraçadeiras de Nylon, fixando-as firmemente ao cano de PVC (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b). 
+
+- **Luva de Trava / Cano de Esgoto (40 mm):** Um segmento de tubo de esgoto de PVC branco de 40 mm de diâmetro e 4 cm a 5 cm de comprimento é deslizado por cima das cabeças das abraçadeiras de Nylon (BEXIGA, 2015; ANGELO, 2021; SILVA et al., 2022; NOIC, 2025a, 2025b). Quando a luva está posicionada sobre as cabeças de Nylon, ela impede que elas se abram, travando o foguete pressurizado na base (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b). 
+
+- **Cordão de Disparo à Distância:** Dois furos opostos são feitos na luva de 40 mm para amarrar um barbante resistente ou corda fina de 5 m a 6 m de comprimento (BEXIGA, 2015; ANGELO, 2021; SILVA et al., 2022; NOIC, 2025a, 2025b). Ao puxar o cordão à distância, a luva desliza para baixo, liberando a flexão das abraçadeiras de Nylon e disparando o foguete instantaneamente (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b).
+
+## Especificidades Técnicas: Nível III x Nível IV
+Embora a estrutura de sustentação e o mecanismo de gatilho por abraçadeiras sejam idênticos, os sistemas de entrada de fluido e controle de pressão diferenciam-se segundo o nível da MOBFOG:
+
+### Base de Lançamento para o Nível III
+No Nível III, o objetivo da base é permitir a injeção pneumática de ar comprimido no reservatório contendo água (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a).
+
+- **Tomada / Válvula de Ar (Pito de Pneu):** Utiliza-se uma tampa de PVC de 20 mm perfurado no centro para o acoplamento de uma **válvula de pneu de bicicleta (pito de câmara de ar)** (BEXIGA, 2015; ANGELO, 2021; SILVA et al., 2022; NOIC, 2025a). A vedação é feita com rodelas de borracha de câmara de ar e fixada com porca metálica (BEXIGA, 2015; NOIC, 2025a).
+
+- **Conexão com a Bomba Pneumática:** O bico da bomba manual de encher pneus (equipada com manômetro) é acoplado diretamente à válvula da base (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a). O ar comprimido entra pelo fundo do alicerce de PVC, sobe pelo tubo disparador e pressuriza a câmara de ar acima da coluna de água do foguete (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a).
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width: 750,
+  height: 550,
+  marginRight: 280,
+  x: { domain: [-12, 12], axis: null },
+  y: { domain: [-2, 34], axis: null },
+  marks: [
+    // Título Superior
+    Plot.text([{x: 0, y: 32, t: "DETALHE DO SISTEMA DE PRESSURIZAÇÃO (NÍVEL III)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 13, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // 1. [ FOGUETE COM ÁGUA ]
+    Plot.rect([{x1: -6, y1: 25.5, x2: 6, y2: 28.5}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 27, t: "[ FOGUETE COM ÁGUA ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Seta 1
+    Plot.ruleX([0], {y1: 25.5, y2: 23.2, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 22.9, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 2. [ TUBO DISPARADOR 20mm ]
+    Plot.rect([{x1: -6, y1: 19, x2: 6, y2: 22}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 20.5, t: "[ TUBO DISPARADOR 20mm ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Seta 2
+    Plot.ruleX([0], {y1: 19, y2: 16.7, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 16.4, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 3. [ "TÊ" E CONEXÕES DE PVC ]
+    Plot.rect([{x1: -6.5, y1: 12.5, x2: 6.5, y2: 15.5}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 14, t: "[ \"TÊ\" E CONEXÕES DE PVC ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Seta 3
+    Plot.ruleX([0], {y1: 12.5, y2: 10.2, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 9.9, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 4. [ TAMPA COM VÁLVULA DE PNEU (PITO) ]
+    Plot.rect([{x1: -7.5, y1: 6, x2: 7.5, y2: 9}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 7.5, t: "[ CAP COM VÁLVULA DE PNEU (PITO) ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Anotação lateral da Entrada do Ar Comprimido
+    Plot.text([{x: 8.2, y: 8.2, t: "<──  Entrada do Ar Comprimido"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 9.6, y: 6.8, t: "(Bomba Pneumática Manual)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+
+    // Seta 4
+    Plot.ruleX([0], {y1: 6, y2: 3.7, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 3.4, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 5. [ BASE DE APOIO EM "H" ]
+    Plot.rect([{x1: -6, y1: -0.5, x2: 6, y2: 2.5}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 1, t: "[ BASE DE APOIO EM \"H\" ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    })
+  ]
+})
+```
+
+### Base de Lançamento para o Nível IV
+No Nível IV, a pressurização é gerada pela reação química ocorrida no interior da própria garrafa PET (ANGELO, 2021; NOIC, 2025b). A base deve oferecer facilidade de manipulação, monitoramento de pressão em tempo real, controle de aborto e um dispositivo para desencadear a reação (ANGELO, 2021; NOIC, 2025b).
+
+- **Manômetro de Pressão Integrado:** Utiliza-se um Tê azul soldável com bucha de latão roscável acoplado ao circuito de PVC de 25 mm, onde se rosqueia um manômetro hidráulico comercial (escala calibrada de 0 a 160 PSI) por meio de um redutor de $1/4''$ para $1/2''$ com fita veda-rosca (ANGELO, 2021; NOIC, 2025b). O manômetro permite acompanhar continuamente a evolução da pressão gerada pelo $\text{CO}_2$ durante a reação química (FONSECA et al., 2018; ANGELO, 2021; NOIC, 2025b).
+
+- **Válvula de Aborto / Despressurização:** Instala-se um registro de esfera de PVC (25 mm) na extremidade do circuito hidráulico da base (ANGELO, 2021). Caso a pressão interna ultrapasse o limite seguro ou ocorra alguma falha no travamento, o operador pode abrir o registro à distância para esvaziar os gases com segurança sem disparar o foguete (ANGELO, 2021).
+
+- **Dispositivo de Rompimento da Reação (Iniciador):** Nos sistemas em que o vinagre é mantido isolado em uma bexiga de festa no interior do foguete, cola-se uma vareta rígida / palito de churrasco na extremidade superior do tubo de lançamento (NOIC, 2025b). Ao encaixar o foguete travado na base, o palito perfura o balão interno, misturando o vinagre ao bicarbonato e dando início imediato à reação de pressurização por $\text{CO}_2$ (RODRIGUES; LIMA; LUNA, 2024; NOIC, 2025b).
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width: 750,
+  height: 480,
+  marginRight: 280,
+  x: { domain: [-12, 12], axis: null },
+  y: { domain: [-4, 28], axis: null },
+  marks: [
+    // Título Superior
+    Plot.text([{x: 0, y: 26, t: "DETALHE DO SISTEMA DE CONTROLE (NÍVEL IV)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 13, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // 1. [ FOGUETE (VINAGRE + NaHCO3) ]
+    Plot.rect([{x1: -6.5, y1: 20, x2: 6.5, y2: 23}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 21.5, t: "[ FOGUETE (VINAGRE + NaHCO3) ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Seta 1
+    Plot.ruleX([0], {y1: 20, y2: 17.7, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 17.4, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 2. [ PALITO INICIADOR / FURO DO BALÃO ]
+    Plot.rect([{x1: -7.5, y1: 13.5, x2: 7.5, y2: 16.5}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 15, t: "[ PALITO INICIADOR / FURO DO BALÃO ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+    Plot.text([{x: 8.2, y: 15, t: "──> Dispara a Reação Química"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 11, fill: "#2c3e50"
+    }),
+
+    // Seta 2
+    Plot.ruleX([0], {y1: 13.5, y2: 11.2, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: 0, y: 10.9, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 3. [ TUBO DISPARADOR 20mm ]
+    Plot.rect([{x1: -6, y1: 7, x2: 6, y2: 10}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 0, y: 8.5, t: "[ TUBO DISPARADOR 20mm ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // Ramificação em "T" (Linhas horizontais e descendentes)
+    Plot.ruleX([0], {y1: 7, y2: 4.5, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.ruleY([4.5], {x1: -6, x2: 6, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.ruleX([-6], {y1: 4.5, y2: 3.2, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.ruleX([6], {y1: 4.5, y2: 3.2, stroke: "#2c3e50", strokeWidth: 1.5}),
+    Plot.text([{x: -6, y: 2.9, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+    Plot.text([{x: 6, y: 2.9, t: "▼"}], {x: "x", y: "y", text: "t", fontSize: 12, fill: "#2c3e50"}),
+
+    // 4. Ramos Inferiores (Manômetro e Registro de Aborto)
+    Plot.rect([{x1: -10.5, y1: -1, x2: -1.5, y2: 2}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: -6, y: 0.5, t: "[ MANÔMETRO EM PSI ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 10, fontWeight: "bold", fill: "#2c3e50"
+    }),
+    Plot.text([{x: -6, y: -2, t: "(Monitora CO2 gerado)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 10, fill: "#555555"
+    }),
+
+    Plot.rect([{x1: 1.5, y1: -1, x2: 10.5, y2: 2}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+    Plot.text([{x: 6, y: 0.5, t: "[ REGISTRO DE ABORTO ]"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 10, fontWeight: "bold", fill: "#2c3e50"
+    }),
+    Plot.text([{x: 6, y: -2, t: "(Válvula de Segurança)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 10, fill: "#555555"
+    }),
+    Plot.text([{x: 11, y: 0.5, t: "──> Esvaziamento de Emergência"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10, fill: "#2c3e50"
+    })
+  ]
+})
+```
+### Protocolos de Segurança e Operação no Lançamento
+A operação das bases nos Níveis III e IV deve seguir rigorosamente as normas de segurança recomendadas pela MOBFOG e registradas nos trabalhos de pesquisa (FONSECA et al., 2018; LAPOLLI; COELHO, 2020; ANGELO, 2021; NOIC, 2025a, 2025b):
+
+1. **Aferição do Limite de Pressão de Segurança:** Testes de estresse estrutural indicam que o limite de ruptura de uma garrafa PET de 2,0 L varia entre 160 PSI e 168 PSI (LAPOLLI; COELHO, 2020). Na operação das bases de lançamento, adota-se como pressão máxima de trabalho o valor de 112 PSI (70% do limite de ruptura), monitorado atentamente pelo manômetro da base ou da bomba (LAPOLLI; COELHO, 2020).
+
+2. **Distância de Segurança e Linha de Tiro:** O acionamento do gatilho deve ser realizado exclusivamente via barbante a uma distância mínima de 5 metros a 6 metros da base (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b). Todos os alunos e espectadores devem permanecer atrás da linha da base durante a fase de pressurização.
+
+3. **Inspeção das Abraçadeiras e Vedações:** Antes de iniciar a pressurização, verifica-se o aperto da abraçadeira metálica sobre o tubo e o estado de conservação das abraçadeiras de Nylon, garantindo que o foguete esteja firme até o momento do puxão do cordão (BEXIGA, 2015; ANGELO, 2021; NOIC, 2025a, 2025b).
 
 # Referências
+::: {#refs}
+:::
