@@ -88,7 +88,7 @@ Recorrendo à identidade trigonométrica do arco duplo, sabemos que
 $$ 2\sin\theta_0 \cos\theta_0 = \sin(2\theta_0). $$
 
 Substituindo essa identidade na relação do alcance, chegamos à equação reduzida do alcance horizontal máximo: 
-
+ 
 $$ R = \frac{v_0^2 \sin(2\theta_0)}{g}. $$
 
 Essa fórmula demonstra que o alcance do foguete é proporcional ao quadrado do módulo da velocidade inicial e depende do seno do dobro do ângulo de lançamento, atingindo seu valor máximo quando o ângulo de disparo for de $45^\circ$, já que $\sin(2 \times 45^\circ) = \sin(90^\circ) = 1$.
