@@ -16,7 +16,109 @@ jupyter: python3
 ---
 
 # Introdução
-Descrever um pouco sobre a MOBFOG.
+A **Mostra Brasileira de Foguetes (MOBFOG)** é uma olimpíada científica de caráter experimental e prático promovida anualmente em todo o território nacional pela Sociedade Astronômica Brasileira (SAB) em parceria com a Agência Espacial Brasileira (AEB) e a Universidade do Estado do Rio de Janeiro (UERJ). Realizada de forma paralela à Olimpíada Brasileira de Astronomia e Astronáutica (OBA), a MOBFOG tem como propósito fundamental despertar a vocação científica e o interesse dos jovens pela Astronáutica, Física, Astronomia e engenharia de foguetes.
+
+Diferentemente do formato educacional tradicional, muitas vezes pautado na apresentação expositiva e na memorização passiva de fórmulas isoladas, a MOBFOG propõe a **aprendizagem por investigação**. Por meio do desafio de projetar, construir e lançar protótipos de foguetes confeccionados com garrafas plásticas de polietileno tereftalato (PET), os estudantes deixam o papel de ouvintes e assumem o protagonismo na resolução de situações-problema reais da física e da engenharia.
+
+A MOBFOG contempla estudantes desde o Ensino Fundamental I até o Ensino Superior, dividindo os participantes por níveis de escolaridade. No entanto, a estrutura didática e de simulação interativa deste portfólio destina-se **exclusivamente aos Níveis III e IV**, englobando os anos finais do Ensino Fundamental II e todo o Ensino Médio:
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width: 750,
+  height: 320,
+  marginRight: 40,
+  x: { domain: [-12, 12], axis: null },
+  y: { domain: [-2, 16], axis: null },
+  marks: [
+    // 1. Moldura Exterior da Tabela
+    Plot.rect([{x1: -11, y1: 0, x2: 11, y2: 15}], {
+      x1: "x1", y1: "y1", x2: "x2", y2: "y2", fill: "#ffffff", stroke: "#2c3e50", strokeWidth: 1.5
+    }),
+
+    // Linha Horizontal 1 (Abaixo do Título Principal)
+    Plot.line([{x: -11, y: 12.5}, {x: 11, y: 12.5}], {x: "x", y: "y", stroke: "#2c3e50", strokeWidth: 1.5}),
+
+    // Linha Horizontal 2 (Abaixo dos Cabeçalhos das Colunas)
+    Plot.line([{x: -11, y: 10}, {x: 11, y: 10}], {x: "x", y: "y", stroke: "#2c3e50", strokeWidth: 1.5}),
+
+    // Linha Vertical Central (Divisória entre Nível III e Nível IV)
+    Plot.line([{x: 0, y: 0}, {x: 0, y: 12.5}], {x: "x", y: "y", stroke: "#2c3e50", strokeWidth: 1.5}),
+
+    // 2. Título Principal
+    Plot.text([{x: 0, y: 13.75, t: "DELIMITAÇÃO DOS NÍVEIS DA MOBFOG NO PORTFÓLIO"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 12, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // 3. Cabeçalhos das Colunas
+    Plot.text([{x: -5.5, y: 11.25, t: "NÍVEL III (Ensino Fundamental II)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+    Plot.text([{x: 5.5, y: 11.25, t: "NÍVEL IV (Ensino Médio)"}], {
+      x: "x", y: "y", text: "t", textAnchor: "middle", fontSize: 11, fontWeight: "bold", fill: "#2c3e50"
+    }),
+
+    // 4. Conteúdo da Coluna Esquerda (Nível III)
+    Plot.text([{x: -10.2, y: 8.5, t: "• Público: 6º ao 9º Ano"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: -10.2, y: 6.5, t: "• Propelente: Água + Ar Comprimido"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: -10.2, y: 4.5, t: "• Pressurização: Bomba manual"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: -10.2, y: 2.5, t: "• Foco Físico: Mecânica Clássica e"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: -9.5, y: 1.0, t: "Propriedades dos Fluidos"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+
+    // 5. Conteúdo da Coluna Direita (Nível IV)
+    Plot.text([{x: 0.8, y: 8.5, t: "• Público: 1º ao 3º Ano"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 0.8, y: 6.5, t: "• Propelente: Vinagre + Bicarbonato"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 0.8, y: 4.5, t: "• Pressurização: Liberação de CO₂"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 0.8, y: 2.5, t: "• Foco Físico: Mecânica, Química"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    }),
+    Plot.text([{x: 1.5, y: 1.0, t: "Estequiométrica e Termodinâmica"}], {
+      x: "x", y: "y", text: "t", textAnchor: "start", fontSize: 10.5, fill: "#2c3e50"
+    })
+  ]
+})
+```
+
+## Nível III (6º ao 9º Ano do Ensino Fundamental II)
+- **Público-Alvo e Organização:** Estudantes regularmente matriculados do 6º ao 9º ano do Ensino Fundamental II.
+
+- **Sistema de Propulsão (Físico):** O propelente permitido consiste unicamente na combinação de água e ar comprimido. A água é colocada na garrafa PET (atuando como massa de reação de alta densidade) e o ar é pressurizado manualmente no interior do reservatório através de uma bomba pneumática de encher pneus de bicicleta.
+
+- **Foco Pedagógico:** Introduzir empiricamente os princípios da Terceira Lei de Newton (Ação e Reação), a compressibilidade dos gases versus a incompressibilidade dos líquidos, o lançamento oblíquo e a estabilidade básica do voo.
+
+## Nível IV (1º ao 3º Ano do Ensino Médio)
+- **Público-Alvo e Organização:** Estudantes do Ensino Médio regular.
+
+- **Sistema de Propulsão (Químico):** O propelente é obrigatoriamente obtido por meio de uma reação química de neutralização entre o ácido acético (vinagre comercial a 4%) e o bicarbonato de sódio ($\text{NaHCO}_3$). A mistura em ambiente fechado libera dióxido de carbono ($\text{CO}_2$), responsável por pressurizar a câmara e expelir a massa líquida no instante da eversão do gatilho. 
+
+- **Foco Pedagógico:** Promover uma profunda integração interdisciplinar entre a Física e a Química. O estudo abrange cálculo estequiométrico, deslocamento de equilíbrio químico (Princípio de Le Chatelier), modelagem da pressão em gases reais, equações da mecânica dos fluidos, aerodinâmica e margem de estabilidade estática (relação entre Centro de Massa e Centro de Pressão).
+
+## Propósito e Estrutura do Portfólio Digital Interativo
+A simples execução de oficinas manuais de foguetes não assegura, por si só, a retenção conceitual duradoura caso não haja mediação pedagógica. Fundamentado na Teoria da Aprendizagem Significativa (TAS) de David Ausubel e Marco Antônio Moreira, este portfólio digital atua como um material potencialmente significativo que conecta a experiência tátil dos lançamentos à formalização matemática da mecânica newtoniana.
+
+Desenvolvido no sistema de publicação *Quarto* com widgets reativos em  Observable JS (OJS), o portfólio disponibiliza um ambiente interativo no qual estudantes e professores podem:
+
+1. **Compreender a Anatomia do Foguete e da Base:** Explorar detalhadamente a função da coifa, do lastro, das aletas, da câmara de pressão e do sistema de gatilho.
+
+2. **Simular Parâmetros de Voo em Tempo Real:** Alterar variáveis como volume de água, massa de reagentes, pressão inicial em PSI e formato de aletas para visualizar o impacto direto na velocidade de escape, na trajetória parabólica e na estabilidade do voo.
+
+3. **Garantir a Segurança nos Ensaios:** Conhecer e aplicar as normas de pressão máxima (limite de 112 PSI) e procedimentos de segurança em campo.
 
 # O vôo do foguete
 
