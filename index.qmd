@@ -454,10 +454,107 @@ Plot.plot({
 ```
 
 # Combustíveis
+A propulsão de um foguete de garrafa PET baseia-se nos princípios da física newtoniana, especificamente na Terceira Lei de Newton (Ação e Reação) e na Conservação da Quantidade de Movimento em Sistemas de Massa Variável. Para que o veículo ganhe aceleração para cima, uma massa de fluido propulsor (líquido ou gás) deve ser expulsa em alta velocidade na direção oposta, gerando uma força de empuxo que impulsiona a estrutura do foguete para a frente.
+
+No regulamento oficial da Mostra Brasileira de Foguetes (MOBFOG), os Níveis III e IV diferenciam-se fundamentalmente pela natureza física e química do propelente utilizado na pressurização e no escoamento do sistema:
+
+- Nível III (Ensino Fundamental II - 6º ao 9º ano): O propelente é exclusivamente de natureza física, composto por uma mistura de água e ar comprimido manualmente via bomba de bicicleta.
+
+- Nível IV (Ensino Médio): O propelente é de natureza estritamente química, obtido por meio da reação de neutralização entre o ácido acético (vinagre comercial a 4%) e o bicarbonato de sódio ($\text{NaHCO}_3$), produzindo dióxido de carbono ($\text{CO}_2$) para a pressurização interna.
 
 ## Água e ar comprimido
 
-## Reação sal e vinagre
+### O Papel Físico dos Combustíveis
+No Nível III da MOBFOG, o sistema de propulsão divide-se em dois papéis físicos complementares: **Ar Comprimido** (Agente Pressurizador): O ar introduzido manualmente pela bomba pneumática comporta-se como um fluido compressível e elástico. Ele armazena energia potencial de pressão que atua como uma "mola" sobre a superfície do líquido. **Água Líquida** (Massa de Reação): A água atua como um fluido incompressível e de alta densidade ($\rho \approx 1000 \text{ kg/m}^3$). Como a densidade da água é cerca de $800$ vezes maior que a do ar, a sua ejeção rápida pelo gargalo transfere um momento linear significativamente maior para o foguete, produzindo um empuxo muito mais intenso do que se o foguete contivesse apenas ar comprimido.
+
+```{mermaid}
+%%| align: center
+flowchart TD
+    subgraph Camara["CÂMARA DE PRESSURIZAÇÃO (NÍVEL III)"]
+        direction TB
+        Ar["AR COMPRIMIDO"] -->| | E_Pressao["Armazena Energia de Pressão (P₀)"]
+        Agua["ÁGUA LÍQUIDA"] -->| | Massa_Reacao["Massa de Reação Ejetada (ρ)"]
+    end
+
+    Camara -->|"Ejeção pelo Bocal (u)"| Empuxo["Empuxo de Reação (3ª Lei)"]
+
+    %% Estilização visual (opcional)
+    style Camara fill:none,stroke:#666,stroke-width:1px,stroke-dasharray: 5 5
+    style Ar fill:#f9f9f9,stroke:#333
+    style Agua fill:#f9f9f9,stroke:#333
+    style Empuxo fill:none,stroke:none
+```
+
+### Equações do Escoamento e Velocidade de Escape no Nível III
+Considerando a água como um fluido incompressível e em escoamento estacionário pelo bocal, aplica-se a Equação de Bernoulli e a Equação da Continuidade:
+
+$$ \frac{1}{2}\rho v_L^2 + P = \frac{1}{2}\rho u^2 + P_{atm} \quad. $$
+
+Onde $P$ é a pressão absoluta no interior da câmara, $P_{atm}$ é a pressão atmosférica, $v_L$ é a velocidade de descida da coluna de água dentro da garrafa e $u$ é a velocidade de escape relativa da água pelo gargalo. Como o diâmetro do gargalo ($D_B$) é muito menor que o diâmetro do corpo da garrafa ($D_F$), a velocidade $v_L$ torna-se desprezível quando elevada ao quadrado, simplificando a velocidade de escape da água ($u$) para:
+
+$$ u = \sqrt{\frac{2(P - P_{atm})}{\rho}} \quad. $$
+
+À medida que a água é ejetada no tempo $t$, o volume de ar $V$ expande-se rapidamente dentro da garrafa. Assumindo uma expansão adiabática sem troca significativa de calor com a vizinhança durante os milissegundos de lançamento ($\gamma = 1,4$ para o ar diatômico), a pressão absoluta instantânea $P(V)$ obedece à lei:
+
+$$ P(V) = P_0 \left( \frac{V_0}{V} \right)^\gamma \quad. $$
+
+A velocidade máxima atingida pelo foguete no momento em que toda a água é expelida depende diretamente da relação entre o volume inicial de ar ($V_0$), o volume de água ($V_{H_2O}$) e a pressão inicial $P_0$ fornecida pela bomba. Ensaios práticos mostram que preencher aproximadamente $1/3$ do volume útil do reservatório com água proporciona o equilíbrio ideal entre massa de reação e volume de ar comprimido para maximizar o alcance horizontal.
+
+## Reação bicarbonato de sódio e vinagre
+
+### Química e Estequiometria do Nível IV
+Nos foguetes do Nível IV (Ensino Médio), a pressurização é obtida exclusivamente por meio de uma reação química de neutralização endotérmica. O ácido acético ($\text{CH}_3\text{COOH}$) presente no vinagre comercial a $4\%$ em massa reage com o bicarbonato de sódio ($\text{NaHCO}_3$):
+
+$$ \text{CH}_3\text{COOH}(aq) + \text{NaHCO}_3(s) \rightarrow \text{CH}_3\text{COONa}(aq) + \text{CO}_2(g) \uparrow + \text{H}_2\text{O}(l) \quad. $$
+
+Considerando a densidade do vinagre próxima de $1 \text{ g/mL}$ e a concentração de $4\%$ de ácido acético ($M = 60 \text{ g/mol}$), cada litro de vinagre comercial contém $40\text{ g}$ de ácido acético, liberando $0,667 \text{ mol}$ de dióxido de carbono ($\text{CO}_2$):
+
+$$ n_{\text{ácido}} = \frac{40}{60} V_{\text{vinagre}} = 0,667 \cdot V_{\text{vinagre}} \quad.$$
+
+A quantidade de bicarbonato de sódio ($M = 84 \text{ g/mol}$) necessária para reagir completamente com $1\text{ L}$ de vinagre sem desperdício de reagentes é calculada por:
+
+$$ m_{\text{bicarbonato}} = 84 \cdot n_{\text{ácido}} \approx 56,03 \cdot V_{\text{vinagre}} \text{ (gramas)} \quad. $$
+
+```{mermaid}
+%%| align: center
+flowchart TD
+    subgraph Reacao["Reação Química (Nível 4)"]
+        direction TB
+        Ingredientes["1 L de Vinagre (4% Ácido Acético)\n+ 56,03 g de Bicarbonato de Sódio"] -->| | Mols["0,667 mol Ácido"]
+        Mols -->| | Produtos["Liberação de 0,667 mol de CO2 + Solução Residual"]
+    end
+
+    Reacao -->|"Pressurização"| Ejecao["Ejeção de CO2 e Massa Líquida no Disparo"]
+
+    %% Estilização visual (opcional)
+    style Reacao fill:none,stroke:#666,stroke-width:1px,stroke-dasharray: 5 5
+    style Ingredientes fill:#f9f9f9,stroke:#333
+    style Ejecao fill:none,stroke:none
+```
+
+### Termodinâmica e Modelagem da Pressão Interna no Nível IV
+Modelar a pressão interna produzida na garrafa PET no Nível IV apresenta um desafio didático e científico. A aplicação direta da Equação do Gás Ideal (Clapeyron) ou da Equação do Gás Real de Van der Waals falha em prever a pressão interna em valores superiores a $60 \text{ PSI}$.
+
+**O Efeito do Princípio de Le Chatelier**
+
+Como a reação ocorre em um recipiente fechado de volume aproximadamente rígido, o rápido aumento da pressão interna desloca o equilíbrio químico de volta no sentido dos reagentes (equilíbrio gasoso/líquido). Isso reduz a quantidade molar efetiva de $\text{CO}_2$ na fase gasosa, atenuando a subida da pressão em comparação com os modelos teóricos puros.
+
+**O Modelo Empírico de Fonseca et al. (2018)**
+
+Inserindo um fator de atenuação linear dependente da pressão ($PV = (n - \alpha P)RT$), Fonseca, Rodrigues e Fonseca estabeleceram uma equação empírica válida para garrafas de $2,0\text{ L}$ na faixa operacional da MOBFOG ($80 \text{ a } 140 \text{ PSI}$):
+
+$$ P = \frac{235,5 \cdot V_{\text{vinagre}}}{2,3 - V_{\text{vinagre}}} \quad (\text{com } P \text{ em PSI e } V_{\text{vinagre}} \text{ em Litros}) \quad. $$
+
+**O Modelo Isotérmico de Lapolli e Coelho (2020)**
+
+Considerando a presença de ar atmosférico remanescente e a expansão elástica da garrafa PET ajustada em Série de Taylor até a 3ª ordem, Lapolli e Coelho obtiveram o modelo polinomial simplificado válido até $160 \text{ PSI}$:
+
+$$ P(V_v) = 105,21 \cdot V_v + 45,6716 \cdot V_v^2 + 19,668 \cdot V_v^3 \quad. $$
+
+## Parâmetros de Segurança
+A pressurização de garrafas PET exige rigoroso controle de segurança para evitar explosões acidentais no campo de lançamento. Testes estruturais demonstram que uma garrafa PET reciclável de $2,0\text{ L}$ suporta uma pressão limite de ruptura de aproximadamente $160 \text{ a } 168 \text{ PSI}$.
+
+Seguindo as recomendações de segurança, deve-se adotar como limite operacional máximo de segurança o valor de $112 \text{ PSI}$ ($70\%$ do limite de ruptura). O manômetro instalado na base de lançamento é o instrumento obrigatório para aferir essa pressão antes do disparo do gatilho.
 
 # O foguete
 
