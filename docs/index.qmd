@@ -1,6 +1,7 @@
 ---
 title: "Portfólio & Guia Interativo de Simulações"
 author: "Letícia Camila Silva de Souza"
+lang: pt
 format:
   html:
     theme: cosmo
